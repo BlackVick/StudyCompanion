@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="currentCourse"
+            type="String" />
+
+        <variable
+            name="hoursStudied"
+            type="String" />
+
+        <variable
+            name="schedulesSet"
+            type="Integer" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_2sdp"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:layout_margin="@dimen/_7sdp">
+
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/ic_course_icon"
+                android:adjustViewBounds="true"
+                android:id="@+id/courseImg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textStyle="bold"
+                android:id="@+id/course"
+                tools:text="Introduction to Computer Science (CSC101)"
+                android:text="@{currentCourse}"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/dosis"
+                android:includeFontPadding="false"
+                app:layout_constraintStart_toEndOf="@+id/courseImg"
+                app:layout_constraintTop_toTopOf="@+id/courseImg"
+                app:layout_constraintBottom_toBottomOf="@+id/courseImg"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:id="@+id/horizonSeparator"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:background="@color/themeOffBlack"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/courseImg"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:id="@+id/studied"
+                tools:text="10 Hours Studied"
+                android:text='@{hoursStudied + " Hours Studied"}'
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/dosis"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toBottomOf="@+id/horizonSeparator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/vertSeparator"/>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:id="@+id/vertSeparator"
+                android:background="@color/themeOffBlack"
+                app:layout_constraintTop_toTopOf="@+id/studied"
+                app:layout_constraintBottom_toBottomOf="@+id/studied"
+                app:layout_constraintStart_toEndOf="@+id/studied"
+                app:layout_constraintEnd_toStartOf="@+id/schedules"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:id="@+id/schedules"
+                tools:text="10 Study Schedules"
+                android:text='@{schedulesSet + " Study Schedules"}'
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/dosis"
+                android:includeFontPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/studied"
+                app:layout_constraintBottom_toBottomOf="@+id/studied"
+                app:layout_constraintStart_toEndOf="@+id/vertSeparator"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

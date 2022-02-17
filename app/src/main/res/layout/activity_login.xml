@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".auth.Login"
+        android:animateLayoutChanges="true"
+        android:background="@color/offWhiteBack">
+
+        <ImageView
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="bottom"
+            android:id="@+id/backButton"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:contentDescription="@string/app_name"
+            android:adjustViewBounds="true"
+            android:enabled="@{isLoading ? false : true, default=true}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log In"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:fontFamily="@font/dosis"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="@+id/backButton"
+            app:layout_constraintBottom_toBottomOf="@+id/backButton"
+            app:layout_constraintStart_toEndOf="@+id/backButton"/>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scrollbars="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backButton"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome Back"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14ssp"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_5sdp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_30sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Matric Number"
+                        android:textColor="@color/themeOffBlack"
+                        android:textSize="@dimen/_12ssp"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:textStyle="normal"
+                        android:layout_marginStart="2dp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edt_ring_black"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:gravity="center_vertical"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="12"
+                        android:textStyle="normal"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/transparentBlack"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:hint="e.g MET/13/3520"
+                        android:id="@+id/userMatric"
+                        android:enabled="@{isLoading ? false : true, default=true}"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password"
+                        android:textColor="@color/themeOffBlack"
+                        android:textSize="@dimen/_12ssp"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:textStyle="normal"
+                        android:layout_marginStart="2dp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edt_ring_black"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:gravity="center_vertical"
+                        android:inputType="textPassword"
+                        android:textStyle="normal"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/transparentBlack"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:hint="********"
+                        android:id="@+id/userPassword"
+                        android:enabled="@{isLoading ? false : true, default=true}"/>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/btn_solid_gradient_ripple"
+                    android:id="@+id/loginBtn"
+                    android:enabled="@{isLoading ? false : true, default=true}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="Log In"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_15ssp"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:visibility="@{isLoading ? View.GONE : View.VISIBLE, default=visible}"/>
+
+                    <com.wang.avi.AVLoadingIndicatorView
+                        style="@style/AVLoadingIndicatorView"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        app:indicatorColor="@color/white"
+                        android:visibility="@{isLoading ? View.VISIBLE : View.GONE, default=gone}"
+                        app:indicatorName="LineSpinFadeLoaderIndicator"
+                        android:id="@+id/registerProgress"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_25sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="You're new?"
+                        android:textSize="@dimen/_12ssp"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/themeOffBlack"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Register"
+                        android:textSize="@dimen/_13ssp"
+                        android:textColor="@color/themePurple"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:id="@+id/registerLink"
+                        android:enabled="@{isLoading ? false : true, default=true}"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

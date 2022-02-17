@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
+            name="isSun"
+            type="Boolean" />
+
+        <variable
+            name="isMon"
+            type="Boolean" />
+        <variable
+            name="isTue"
+            type="Boolean" />
+        <variable
+            name="isWed"
+            type="Boolean" />
+
+        <variable
+            name="isThu"
+            type="Boolean" />
+
+        <variable
+            name="isFri"
+            type="Boolean" />
+
+        <variable
+            name="isSat"
+            type="Boolean" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_dialog_back"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:animateLayoutChanges="true">
+
+        <ImageView
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:adjustViewBounds="true"
+            android:id="@+id/closeDialog"
+            android:src="@drawable/ic_close"
+            app:tint="@color/subtraction"
+            android:enabled="@{isLoading ? false : true, default=true}"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:text="Create New Schedule"
+            android:textStyle="bold"
+            android:textSize="@dimen/_13ssp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/dosis"
+            android:includeFontPadding="false"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@+id/closeDialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/closeDialog"
+            app:layout_constraintBottom_toBottomOf="@+id/closeDialog"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/dayLayout"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:weightSum="100"
+            app:layout_constraintTop_toBottomOf="@+id/closeDialog"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_swipe_left"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"/>
+
+            <HorizontalScrollView
+                android:layout_width="0dp"
+                android:layout_weight="90"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/weeklyDayPick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/btn_solid_blue_ripple"
+                        android:enabled="@{isLoading ? false : true, default=true}"
+                        android:layout_margin="5dp"
+                        android:id="@+id/sunButton"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="SUN"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:textSize="13sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="4dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
+                            android:background="@{isSun ? @drawable/selected_day : @drawable/unselected_day, default=@drawable/unselected_day}"
+                            android:id="@+id/sunIndicator"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/btn_solid_blue_ripple"
+                        android:enabled="@{isLoading ? false : true, default=true}"
+                        android:layout_margin="5dp"
+                        android:id="@+id/monButton"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="MON"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="4dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
+                            android:background="@{isMon ? @drawable/selected_day : @drawable/unselected_day, default=@drawable/unselected_day}"
+                            android:id="@+id/monIndicator"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/btn_solid_blue_ripple"
+                        android:enabled="@{isLoading ? false : true, default=true}"
+                        android:layout_margin="5dp"
+                        android:id="@+id/tueButton"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="TUE"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="4dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
+                            android:background="@{isTue ? @drawable/selected_day : @drawable/unselected_day, default=@drawable/unselected_day}"
+                            android:id="@+id/tueIndicator"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/btn_solid_blue_ripple"
+                        android:enabled="@{isLoading ? false : true, default=true}"
+                        android:layout_margin="5dp"
+                        android:id="@+id/wedButton"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="WED"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="4dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
+                            android:background="@{isWed ? @drawable/selected_day : @drawable/unselected_day, default=@drawable/unselected_day}"
+                            android:id="@+id/wedIndicator"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/btn_solid_blue_ripple"
+                        android:enabled="@{isLoading ? false : true, default=true}"
+                        android:layout_margin="5dp"
+                        android:id="@+id/thuButton"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="THU"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="4dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
+                            android:background="@{isThu ? @drawable/selected_day : @drawable/unselected_day, default=@drawable/unselected_day}"
+                            android:id="@+id/thuIndicator"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/btn_solid_blue_ripple"
+                        android:enabled="@{isLoading ? false : true, default=true}"
+                        android:layout_margin="5dp"
+                        android:id="@+id/friButton"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="FRI"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="4dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
+                            android:background="@{isFri ? @drawable/selected_day : @drawable/unselected_day, default=@drawable/unselected_day}"
+                            android:id="@+id/friIndicator"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/btn_solid_blue_ripple"
+                        android:enabled="@{isLoading ? false : true, default=true}"
+                        android:layout_margin="5dp"
+                        android:id="@+id/satButton"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="SAT"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                        <View
+                            android:layout_width="15dp"
+                            android:layout_height="4dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
+                            android:background="@{isSat ? @drawable/selected_day : @drawable/unselected_day, default=@drawable/unselected_day}"
+                            android:id="@+id/satIndicator"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_swipe_right"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/timeLayout"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintTop_toBottomOf="@+id/dayLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Start Time"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="@color/themeOffBlack"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CLICK TO SET TIME"
+                    android:textStyle="bold"
+                    android:enabled="@{isLoading ? false : true, default=true}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    android:padding="@dimen/_6sdp"
+                    android:id="@+id/startTime"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Stop Time"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"
+                    android:textStyle="bold"
+                    android:textColor="@color/themeOffBlack"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CLICK TO SET TIME"
+                    android:textStyle="bold"
+                    android:enabled="@{isLoading ? false : true, default=true}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    android:padding="@dimen/_6sdp"
+                    android:id="@+id/stopTime"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/addBtn"
+            android:background="@drawable/btn_solid_blue_ripple"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:animateLayoutChanges="true"
+            android:enabled="@{isLoading ? false : true, default=true}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeLayout"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/loginText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/dosis"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="Add"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold"
+                android:visibility="@{isLoading ? View.INVISIBLE : View.VISIBLE, default=visible}" />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loginProgress"
+                style="@style/AVLoadingIndicatorView"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:visibility="@{isLoading ? View.VISIBLE : View.INVISIBLE, default=invisible}"
+                app:indicatorColor="@color/white"
+                app:indicatorName="BallPulseSyncIndicator" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

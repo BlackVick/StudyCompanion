@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="currentUser"
+            type="esw.peeplo.studentstudycom.models.User" />
+
+        <variable
+            name="studied"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Dashboard"
+        android:animateLayoutChanges="true"
+        android:background="@color/offWhiteBack">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:id="@+id/title"
+            android:textStyle="bold"
+            android:text="@string/app_name"
+            android:textSize="@dimen/_18ssp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/dosis"
+            android:includeFontPadding="false"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/userAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
+            app:layout_constraintEnd_toStartOf="@+id/userAvatar"/>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:riv_corner_radius="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:id="@+id/userAvatar"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:avatarURL="@{currentUser.avatar}"
+            android:src="@drawable/avatar_placeholder"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scrollbars="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userAvatar"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    app:cardCornerRadius="@dimen/_15sdp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardElevation="@dimen/_3sdp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/card_background"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:layout_gravity="center"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:id="@+id/welcome"
+                            android:textStyle="bold"
+                            tools:text="Welcome Ayodeji,"
+                            android:text='@{"Hello " + currentUser.first_name}'
+                            android:textSize="@dimen/_18ssp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:id="@+id/matric"
+                            android:textStyle="bold"
+                            tools:text="Matric No: MET/13/3520,"
+                            android:text='@{"Matric No " + currentUser.matric_num}'
+                            android:textSize="@dimen/_15ssp"
+                            android:textColor="@color/themeOffBlack"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/welcome"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="@dimen/_2sdp"
+                            android:id="@+id/styleCard"
+                            app:cardBackgroundColor="@color/translucentWhite"
+                            app:cardCornerRadius="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/matric"
+                            app:layout_constraintEnd_toStartOf="@+id/hoursCard"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_margin="@dimen/_5sdp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Study Style"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:textColor="@color/themeOffBlack"
+                                    android:fontFamily="@font/dosis"
+                                    android:includeFontPadding="false"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_6sdp"
+                                    android:text="@{currentUser.study_style}"
+                                    android:textSize="@dimen/_13ssp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/dosis"
+                                    android:includeFontPadding="false"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="@dimen/_2sdp"
+                            android:id="@+id/hoursCard"
+                            app:cardBackgroundColor="@color/translucentWhite"
+                            app:cardCornerRadius="@dimen/_10sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            app:layout_constraintStart_toEndOf="@+id/styleCard"
+                            app:layout_constraintTop_toTopOf="@+id/styleCard"
+                            app:layout_constraintBottom_toBottomOf="@+id/styleCard"
+                            app:layout_constraintEnd_toEndOf="parent">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_margin="@dimen/_5sdp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Total Study Hours"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:textColor="@color/themeOffBlack"
+                                    android:fontFamily="@font/dosis"
+                                    android:includeFontPadding="false"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_6sdp"
+                                    android:text='@{studied + " hrs"}'
+                                    android:textSize="@dimen/_13ssp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:fontFamily="@font/dosis"
+                                    android:includeFontPadding="false"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:textStyle="bold"
+                    android:text='@{"Registered Courses (" + currentUser.courses.courses.size() + ")"}'
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/coursesRecycler"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

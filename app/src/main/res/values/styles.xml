@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- SPLASH THEME -->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <!--  DIALOG APPEARANCE THEME  -->
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/scale_in</item>
+        <item name="android:windowExitAnimation">@anim/scale_out</item>
+    </style>
+
+    <!--  PROGRESS THEME -->
+    <style name="ProgressTheme" parent="AppTheme">
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <!--  THEME SPINNER THEME  -->
+    <style name="ThemeSpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/custom_fade_spinner</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="fontFamily">@font/dosis</item>
+    </style>
+
+    <!--  LIGHT GREY SPINNER THEME  -->
+    <style name="GreyNakedSpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/custom_grey_spinner</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="fontFamily">@font/dosis</item>
+    </style>
+
+    <!--  AUTH RING SPINNER THEME  -->
+    <style name="RingSpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/custom_ring_spinner</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/dosis</item>
+    </style>
+
+    <!-- WHITE ACCENT THEME -->
+    <style name="WhiteAccentTheme" parent="AppTheme">
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <!-- THEME ACCENT THEME -->
+    <style name="ThemeAccentTheme" parent="Base.Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <!--  NAKED SPINNER THEME  -->
+    <style name="NakedSpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/custom_naked_spinner</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="fontFamily">@font/dosis</item>
+    </style>
+
+    <!--  DIALOG THEME  -->
+    <style name="DialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:gravity">bottom</item>
+    </style>
+
+    <!--  DIALOG APPEARANCE THEME  -->
+    <style name="SlideDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/goup</item>
+        <item name="android:windowExitAnimation">@anim/godown</item>
+    </style>
+</resources>

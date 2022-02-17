@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        
+        <variable
+            name="currentQuestion"
+            type="esw.peeplo.studentstudycom.models.Question" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:animateLayoutChanges="true"
+        android:layout_margin="@dimen/_20sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="16. "
+            android:text='@{currentQuestion.id + ". "}'
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:id="@+id/questionNumber"
+            android:fontFamily="@font/dosis"
+            android:includeFontPadding="false"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            android:layout_marginStart="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Intro to React"
+                android:text="@{currentQuestion.question}"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/black"
+                android:id="@+id/question"
+                android:fontFamily="@font/dosis"
+                android:includeFontPadding="false"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical"
+                android:id="@+id/answerRadio">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioA"
+                    android:checked="false"
+                    android:text='@{currentQuestion.answers.get(0).answer}'
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"/>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioB"
+                    android:checked="false"
+                    android:text='@{currentQuestion.answers.get(1).answer}'
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"/>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioC"
+                    android:checked="false"
+                    android:visibility="@{currentQuestion.answers.size() > 2 ? View.VISIBLE : View.GONE, default=gone}"
+                    android:text='@{currentQuestion.answers.size() > 2 ? currentQuestion.answers.get(2).answer : "", default=""}'
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"/>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioD"
+                    android:checked="false"
+                    android:visibility="@{currentQuestion.answers.size() > 2 ? View.VISIBLE : View.GONE, default=gone}"
+                    android:text='@{currentQuestion.answers.size() > 2 ? currentQuestion.answers.get(3).answer : "", default=""}'
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

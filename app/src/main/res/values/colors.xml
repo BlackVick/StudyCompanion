@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#803DD6</color>
+    <color name="colorPrimary">#9968D8</color>
+    <color name="colorAccent">#1A1E1A</color>
+
+
+    <color name="themeBlue">#3578C4</color>
+    <color name="themePurple">#C905E7</color>
+    <color name="editTextRingGrey">#9EA69C</color>
+    <color name="offWhiteBack">#ECF0EB</color>
+
+
+
+    <color name="themeYellow">#ffdd00</color>
+    <color name="themeDarkYellow">#A89411</color>
+    <color name="themeLightBlue">#65a9f8</color>
+    <color name="themeGrey">#707071</color>
+    <color name="themeLightGrey">#eeeeee</color>
+
+
+    <color name="black">#000000</color>
+    <color name="transparentBlack">#99000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="offWhite">#F6F6F6</color>
+    <color name="transparentWhite">#99FFFFFF</color>
+    <color name="fadedWhite92">#EBFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="offBlack">#252424</color>
+    <color name="fairlyLightGrey">#DEDEDE</color>
+    <color name="veryLightBlueBack">#DEE7EE</color>
+    <color name="translucentWhite">#F0FFFFFF</color>
+    <color name="transparentBlue">#CB1B4679</color>
+    <color name="transparentThemeBlue">#207B74F6</color>
+
+    <color name="themeOffBlack">#515C51</color>
+    <color name="inactiveMenu">#5E5E5E</color>
+    <color name="themeTagBack">#E4FFDF</color>
+    <color name="titleBlue">#3981C5</color>
+    <color name="menuSelect">#00A2E7</color>
+    <color name="edtBackLight">#DFE5EA</color>
+
+    <color name="addition">#229A2B</color>
+    <color name="subtraction">#C23429</color>
+</resources>

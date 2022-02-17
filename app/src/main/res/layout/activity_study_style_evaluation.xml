@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+        
+        <variable
+            name="hasPrevious"
+            type="Boolean" />
+
+        <variable
+            name="isFinal"
+            type="Boolean" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".auth.StudyStyleEvaluation"
+        android:animateLayoutChanges="true"
+        android:background="@color/offWhiteBack">
+
+        <ImageView
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="bottom"
+            android:id="@+id/backButton"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:contentDescription="@string/app_name"
+            android:adjustViewBounds="true"
+            android:enabled="@{isLoading ? false : true, default=true}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:id="@+id/title"
+            android:text="Study Evaluation"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:fontFamily="@font/dosis"
+            android:includeFontPadding="false"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="@+id/backButton"
+            app:layout_constraintBottom_toBottomOf="@+id/backButton"
+            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintEnd_toStartOf="@+id/skipEval"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/skip"
+            android:id="@+id/skipEval"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/dosis"
+            android:includeFontPadding="false"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="@+id/backButton"
+            app:layout_constraintBottom_toBottomOf="@+id/backButton"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/backButton"
+            app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/questionRecycler"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_20sdp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/btn_solid_gradient_ripple"
+            android:id="@+id/previousBtn"
+            android:visibility="@{hasPrevious ? View.VISIBLE : View.GONE, default=gone}"
+            android:enabled="@{isLoading ? false : true, default=true}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:text="Prev"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:fontFamily="@font/dosis"
+                android:includeFontPadding="false"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_20sdp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/btn_solid_gradient_ripple"
+            android:id="@+id/nextBtn"
+            android:enabled="@{isLoading ? false : true, default=true}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:text='@{isFinal ? "Evaluate" : "Next", default="Next"}'
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/_15ssp"
+                android:fontFamily="@font/dosis"
+                android:includeFontPadding="false"/>
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

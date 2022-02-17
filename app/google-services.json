@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "930866913051",
+    "project_id": "peeplo-projects",
+    "storage_bucket": "peeplo-projects.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930866913051:android:a15f4a2069ba860c287dbe",
+        "android_client_info": {
+          "package_name": "esw.peeplo.studentstudycom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930866913051-gg986gs3t2m0u6sq4ks7rlnv83hj46p7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "esw.peeplo.studentstudycom",
+            "certificate_hash": "764173fa0fd6cf5e89dadd6a8534f048f5c3cce0"
+          }
+        },
+        {
+          "client_id": "930866913051-7havuq6h233oens7kj14n6hpil7td3cj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNzmCmFMj8DBmUNnRbiml_yh95QtK523c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930866913051-7havuq6h233oens7kj14n6hpil7td3cj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

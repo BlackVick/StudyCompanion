@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="currentSchedule"
+            type="esw.peeplo.studentstudycom.models.Schedule" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_solid_blue_ripple"
+        android:layout_margin="@dimen/_5sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:layout_margin="@dimen/_7sdp">
+
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/ic_schedule_icon"
+                app:tint="@color/white"
+                android:adjustViewBounds="true"
+                android:id="@+id/scheduleImg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textStyle="bold"
+                tools:text="Tuesday (10:30 hrs - 15:30 hrs)"
+                android:text='@{currentSchedule.day + "(" + currentSchedule.start + " hrs - " + currentSchedule.end + " hrs)"}'
+                android:textSize="@dimen/_13ssp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/dosis"
+                android:includeFontPadding="false"
+                app:layout_constraintStart_toEndOf="@+id/scheduleImg"
+                app:layout_constraintTop_toTopOf="@+id/scheduleImg"
+                app:layout_constraintBottom_toBottomOf="@+id/scheduleImg"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_delete_schedule"
+                app:tint="@color/white"
+                android:adjustViewBounds="true"
+                android:id="@+id/deleteSchedule"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isStudying"
+            type="Boolean" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
+            name="course"
+            type="String" />
+
+        <variable
+            name="searches"
+            type="Integer" />
+
+        <variable
+            name="studied"
+            type="String" />
+
+        <variable
+            name="concentration"
+            type="String" />
+
+        <variable
+            name="distraction"
+            type="String" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CourseDetail"
+        android:background="@color/offWhiteBack"
+        android:animateLayoutChanges="true"
+        android:keepScreenOn="true">
+
+        <ImageView
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="bottom"
+            android:id="@+id/backButton"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:contentDescription="@string/app_name"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course Details"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:fontFamily="@font/dosis"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="@+id/backButton"
+            app:layout_constraintBottom_toBottomOf="@+id/backButton"
+            app:layout_constraintStart_toEndOf="@+id/backButton"/>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scrollbars="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backButton"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:textStyle="bold"
+                    tools:text="Introduction to Computer science (CSC101)"
+                    android:text="@{course}"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/dosis"
+                    android:includeFontPadding="false"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/evaluationTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Course Evaluation"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themeOffBlack"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/queryTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Queries Searched:"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toBottomOf="@+id/evaluationTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:text="(10)"
+                            android:text='@{"(" + searches + ")"}'
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themePurple"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="@+id/queryTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/queryTitle"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/studyTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Total Hours Studied:"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toBottomOf="@+id/queryTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:text="3 hrs"
+                            android:text='@{studied + " hrs"}'
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themePurple"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="@+id/studyTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/studyTitle"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/concentrationTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Concentration Index:"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toBottomOf="@+id/studyTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:text="98 %"
+                            android:text='@{concentration + " %"}'
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themePurple"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="@+id/concentrationTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/concentrationTitle"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/distractionTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Distraction Index:"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toBottomOf="@+id/concentrationTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:text="2 %"
+                            android:text='@{distraction + " %"}'
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themePurple"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="@+id/distractionTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/distractionTitle"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/searchTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Study Search Assist"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themeOffBlack"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:id="@+id/searchLayout"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/edt_search"
+                            app:layout_constraintTop_toBottomOf="@+id/searchTitle"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/transparent"
+                                android:id="@+id/searchEdt"
+                                android:layout_toStartOf="@+id/searchBtn"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_5sdp"
+                                android:gravity="center_vertical"
+                                android:textSize="@dimen/_13ssp"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/dosis"
+                                android:includeFontPadding="false"
+                                android:hint="Search something . . ."
+                                android:textColorHint="@color/themeOffBlack"
+                                android:ellipsize="start"
+                                android:singleLine="true"/>
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="@dimen/_45sdp"
+                                android:layout_height="@dimen/_41sdp"
+                                app:riv_corner_radius="@dimen/_30sdp"
+                                android:layout_marginEnd="@dimen/_2sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/search_img"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/searchBtn"
+                                android:enabled="@{isLoading ? false : true, default=true}"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            app:layout_constraintTop_toBottomOf="@+id/searchLayout"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/searchRecycler"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                        </RelativeLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/scheduleTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Study Schedules"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themeOffBlack"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:id="@+id/scheduleLayout"
+                            app:layout_constraintTop_toBottomOf="@+id/scheduleTitle"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/scheduleRecycler"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                        </RelativeLayout>
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            app:riv_corner_radius="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/add_schedule"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/addBtn"
+                            app:layout_constraintTop_toBottomOf="@+id/scheduleLayout"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/btn_solid_gradient_ripple"
+                    android:id="@+id/studyBtn"
+                    android:enabled="@{isLoading ? false : true, default=true}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text='@{isStudying ? "End Study Session" : "Start Study Session", default="Start Study Session"}'
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_15ssp"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:visibility="@{isLoading ? View.GONE : View.VISIBLE, default=visible}"/>
+
+                    <com.wang.avi.AVLoadingIndicatorView
+                        style="@style/AVLoadingIndicatorView"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        app:indicatorColor="@color/white"
+                        android:visibility="@{isLoading ? View.VISIBLE : View.GONE, default=gone}"
+                        app:indicatorName="LineSpinFadeLoaderIndicator"
+                        android:id="@+id/registerProgress"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:cardElevation="@dimen/_1sdp"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardBackgroundColor="@color/white"
+            android:id="@+id/reading"
+            android:visibility="@{isStudying ? View.VISIBLE : View.INVISIBLE, default=invisible}"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="@+id/backButton"
+            app:layout_constraintBottom_toBottomOf="@+id/backButton"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/_23sdp"
+                android:layout_height="@dimen/_23sdp"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_reading"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

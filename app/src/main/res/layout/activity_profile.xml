@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="currentUser"
+            type="esw.peeplo.studentstudycom.models.User" />
+
+        <variable
+            name="searches"
+            type="Integer" />
+
+        <variable
+            name="studied"
+            type="String" />
+
+        <variable
+            name="concentration"
+            type="String" />
+
+        <variable
+            name="distraction"
+            type="String" />
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Profile"
+        android:animateLayoutChanges="true"
+        android:background="@color/offWhiteBack">
+
+        <ImageView
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="bottom"
+            android:id="@+id/backButton"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:contentDescription="@string/app_name"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            android:fontFamily="@font/dosis"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintTop_toTopOf="@+id/backButton"
+            app:layout_constraintBottom_toBottomOf="@+id/backButton"
+            app:layout_constraintStart_toEndOf="@+id/backButton"/>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@+id/backButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginBottom="@dimen/_10sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:orientation="vertical">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        app:riv_corner_radius="@dimen/_10sdp"
+                        android:id="@+id/userAvatar"
+                        android:src="@drawable/avatar_placeholder"
+                        android:avatarURL="@{currentUser.avatar}"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_25sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:animateLayoutChanges="true">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/evaluationTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="User Evaluation"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themeOffBlack"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/queryTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Queries Searched:"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toBottomOf="@+id/evaluationTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:text="(10)"
+                            android:text='@{"(" + searches + ")"}'
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themePurple"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="@+id/queryTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/queryTitle"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/studyTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Total Hours Studied:"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toBottomOf="@+id/queryTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:text="3 hrs"
+                            android:text='@{studied + " hrs"}'
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themePurple"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="@+id/studyTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/studyTitle"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/concentrationTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Concentration Index:"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toBottomOf="@+id/studyTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:text="98 %"
+                            android:text='@{concentration + " %"}'
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themePurple"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="@+id/concentrationTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/concentrationTitle"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/distractionTitle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Distraction Index:"
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toBottomOf="@+id/concentrationTitle"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:text="2 %"
+                            android:text='@{distraction + " %"}'
+                            android:textSize="@dimen/_13ssp"
+                            android:textColor="@color/themePurple"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/dosis"
+                            android:includeFontPadding="false"
+                            app:layout_constraintTop_toTopOf="@+id/distractionTitle"
+                            app:layout_constraintBottom_toBottomOf="@+id/distractionTitle"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_25sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full Name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:layout_marginStart="2dp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edt_ring_off_black"
+                        android:padding="10dp"
+                        android:enabled="false"
+                        android:gravity="center_vertical"
+                        android:inputType="textCapWords"
+                        android:textStyle="normal"
+                        android:text='@{currentUser.first_name + " " + currentUser.last_name}'
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/dosis"
+                        android:id="@+id/firstName" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Matriculation Number"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:layout_marginStart="2dp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edt_ring_off_black"
+                        android:padding="10dp"
+                        android:enabled="false"
+                        android:gravity="center_vertical"
+                        android:inputType="textCapWords"
+                        android:textStyle="bold"
+                        android:text="@{currentUser.matric_num}"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Department"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:layout_marginStart="2dp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edt_ring_off_black"
+                        android:padding="10dp"
+                        android:enabled="false"
+                        android:gravity="center_vertical"
+                        android:inputType="textCapWords"
+                        android:textStyle="normal"
+                        android:text="@{currentUser.dept}"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/_20sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Study Style"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="normal"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"
+                        android:layout_marginStart="2dp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edt_ring_off_black"
+                        android:padding="10dp"
+                        android:enabled="false"
+                        android:gravity="center_vertical"
+                        android:inputType="textCapWords"
+                        android:textStyle="normal"
+                        android:text="@{currentUser.study_style}"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/dosis"
+                        android:includeFontPadding="false"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
