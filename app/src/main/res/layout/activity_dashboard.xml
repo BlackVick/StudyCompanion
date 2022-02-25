@@ -50,7 +50,6 @@
             android:id="@+id/userAvatar"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:avatarURL="@{currentUser.avatar}"
             android:src="@drawable/avatar_placeholder"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -121,7 +120,7 @@
                             android:id="@+id/matric"
                             android:textStyle="bold"
                             tools:text="Matric No: MET/13/3520,"
-                            android:text='@{"Matric No " + currentUser.matric_num}'
+                            android:text='@{"Matric No: " + currentUser.matric_num}'
                             android:textSize="@dimen/_15ssp"
                             android:textColor="@color/themeOffBlack"
                             android:fontFamily="@font/dosis"

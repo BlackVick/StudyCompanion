@@ -8,6 +8,7 @@ public class Common {
 
     //notification
     public static final String DEFAULT_NOTIFICATION_CHANNEL = "esw.peeplo.studentstudycom.DEFAULT_NOTIFICATION";
+    public static final String FOREGROUND_NOTIFICATION_CHANNEL = "esw.peeplo.studentstudycom.FOREGROUND_NOTIFICATION";
 
     //intent keys
     public static final String COURSE_DATA = "CourseData";

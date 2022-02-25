@@ -35,6 +35,10 @@ public class ScheduleViewModel extends AndroidViewModel {
         return database.scheduleDao().getAllUserCourseSchedules(matric, course);
     }
 
+    public List<Schedule> getDirectCourseSchedules(String matric, String course){
+        return database.scheduleDao().getDirectAllUserCourseSchedules(matric, course);
+    }
+
     public LiveData<List<Schedule>> doesScheduleExist(String matric, String course, String day){
         return database.scheduleDao().doesScheduleExist(matric, course, day);
     }

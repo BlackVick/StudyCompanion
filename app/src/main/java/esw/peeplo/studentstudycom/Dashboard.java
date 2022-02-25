@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -160,6 +161,13 @@ public class Dashboard extends AppCompatActivity implements InfoClickListener, C
 
         //set user
         activity.setCurrentUser(currentUser);
+
+        //set image
+        Picasso.get()
+                .load(Uri.parse(currentUser.getAvatar()))
+                .config(Bitmap.Config.RGB_565)
+                .fit().centerCrop()
+                .into(activity.userAvatar);
 
         //other evaluation
         registryViewModel.getUserRegistry(matric).observe(this, response -> {

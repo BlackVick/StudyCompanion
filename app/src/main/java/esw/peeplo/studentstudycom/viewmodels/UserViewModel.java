@@ -33,15 +33,15 @@ public class UserViewModel extends AndroidViewModel {
         return database.userDao().getAllUsers();
     }
 
-    public LiveData<User> doesUserExist(String matric){
+    public User doesUserExist(String matric){
         return database.userDao().doesUserExist(matric);
     }
 
-    public LiveData<User> loginUser(String matric, String password){
+    public User loginUser(String matric, String password){
         return database.userDao().loginUser(matric, password);
     }
 
-    public LiveData<User> getCurrentUser(String matric){
+    public User getCurrentUser(String matric){
         return database.userDao().getCurrentUser(matric);
     }
 

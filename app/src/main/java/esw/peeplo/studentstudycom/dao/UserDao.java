@@ -29,15 +29,15 @@ public interface UserDao {
 
     //check if user exist
     @Query("SELECT * FROM users WHERE matric_num = :matric")
-    LiveData<User> doesUserExist(String matric);
+    User doesUserExist(String matric);
 
     //login user
     @Query("SELECT * FROM users WHERE matric_num = :matric AND password = :password")
-    LiveData<User> loginUser(String matric, String password);
+    User loginUser(String matric, String password);
 
     //get current user
     @Query("SELECT * FROM users WHERE matric_num = :matric")
-    LiveData<User> getCurrentUser(String matric);
+    User getCurrentUser(String matric);
 
     //update user courses
     @Query("UPDATE users SET courses = :courses WHERE id = :id AND matric_num = :matric")

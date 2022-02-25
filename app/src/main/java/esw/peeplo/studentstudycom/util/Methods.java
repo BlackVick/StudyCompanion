@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,5 +102,16 @@ public class Methods {
         Date date = calendar.getTime();
         return new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());
 
+    }
+
+    public static Optional<String> getExtensionByStringHandling(String filename) {
+        return Optional.ofNullable(filename)
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(filename.lastIndexOf(".") + 1));
+    }
+
+    public static String generateString() {
+        String uuid = UUID.randomUUID().toString();
+        return uuid;
     }
 }

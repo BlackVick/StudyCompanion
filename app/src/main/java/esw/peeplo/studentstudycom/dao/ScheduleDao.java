@@ -29,6 +29,10 @@ public interface ScheduleDao {
     @Query("SELECT * FROM schedules WHERE owner = :matric AND course = :course")
     LiveData<List<Schedule>> getAllUserCourseSchedules(String matric, String course);
 
+    //get all user schedules for course
+    @Query("SELECT * FROM schedules WHERE owner = :matric AND course = :course")
+    List<Schedule> getDirectAllUserCourseSchedules(String matric, String course);
+
     //check if schedule exist
     @Query("SELECT * FROM schedules WHERE owner = :matric AND course = :course AND day = :day")
     LiveData<List<Schedule>> doesScheduleExist(String matric, String course, String day);

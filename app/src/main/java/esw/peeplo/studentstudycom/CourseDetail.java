@@ -62,6 +62,7 @@ import esw.peeplo.studentstudycom.models.CourseRegistry;
 import esw.peeplo.studentstudycom.models.Schedule;
 import esw.peeplo.studentstudycom.models.Search;
 import esw.peeplo.studentstudycom.models.User;
+import esw.peeplo.studentstudycom.services.ScheduleService;
 import esw.peeplo.studentstudycom.util.Common;
 import esw.peeplo.studentstudycom.util.Methods;
 import esw.peeplo.studentstudycom.viewmodels.RegistryViewModel;
@@ -605,6 +606,17 @@ public class CourseDetail extends AppCompatActivity implements InfoClickListener
 
                 //close dialog
                 scheduleDialog.dismiss();
+
+                //stop schedule service
+                if (Methods.isServiceRunning(this, ScheduleService.class)) {
+                    stopService(new Intent(this, ScheduleService.class));
+                }
+
+                //start schedule service
+                if (!Methods.isServiceRunning(this, ScheduleService.class)) {
+                    Intent scheduleIntent = new Intent(this, ScheduleService.class);
+                    ContextCompat.startForegroundService(this, scheduleIntent);
+                }
 
             }
 

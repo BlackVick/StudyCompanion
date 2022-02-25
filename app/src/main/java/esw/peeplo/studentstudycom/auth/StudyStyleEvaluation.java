@@ -6,12 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +16,19 @@ import java.util.stream.Collectors;
 import esw.peeplo.studentstudycom.Dashboard;
 import esw.peeplo.studentstudycom.R;
 import esw.peeplo.studentstudycom.adapters.QuestionnaireAdapter;
-import esw.peeplo.studentstudycom.adapters.SearchAdapter;
 import esw.peeplo.studentstudycom.databinding.ActivityStudyStyleEvaluationBinding;
 import esw.peeplo.studentstudycom.dialogs.InfoDialog;
 import esw.peeplo.studentstudycom.dialogs.LoadingDialog;
 import esw.peeplo.studentstudycom.interfaces.InfoClickListener;
 import esw.peeplo.studentstudycom.models.Answer;
 import esw.peeplo.studentstudycom.models.AnsweredQuestion;
+import esw.peeplo.studentstudycom.models.AutoSchedule;
 import esw.peeplo.studentstudycom.models.Question;
+import esw.peeplo.studentstudycom.models.Schedule;
 import esw.peeplo.studentstudycom.models.User;
 import esw.peeplo.studentstudycom.util.Common;
 import esw.peeplo.studentstudycom.util.Methods;
+import esw.peeplo.studentstudycom.viewmodels.ScheduleViewModel;
 import esw.peeplo.studentstudycom.viewmodels.UserViewModel;
 import io.paperdb.Paper;
 
@@ -61,8 +58,15 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
     private AnsweredQuestion currentAnswer;
     private String style = "";
 
+    //auto scheduling
+    private List<AutoSchedule> progressiveSchedule = new ArrayList<>();
+    private List<AutoSchedule> oneWeekSchedule = new ArrayList<>();
+    private List<AutoSchedule> obsessedSchedule = new ArrayList<>();
+    private List<AutoSchedule> crammerSchedule = new ArrayList<>();
+
     //view model
     private UserViewModel userViewModel;
+    private ScheduleViewModel scheduleViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,9 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
 
         //set defaults
         setDefaults();
+
+        //init auto scheduling
+        initAutoSchedules();
 
         //build questionnaire
         buildQuestionnaire();
@@ -121,6 +128,7 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
 
         //setup view model
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        scheduleViewModel = new ViewModelProvider(this).get(ScheduleViewModel.class);
 
         //loading
         activity.setIsLoading(false);
@@ -129,6 +137,102 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
 
         //get current user
         getCurrentUser();
+
+    }
+
+    private void initAutoSchedules() {
+
+        //progressive learner time slots
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_SUN, "08:00", "10:00"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_TUE, "08:00", "10:00"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_THU, "08:00", "10:00"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_SAT, "08:00", "10:00"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_MON, "08:00", "10:00"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_WED, "08:00", "10:00"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_FRI, "08:00", "10:00"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_SUN, "10:05", "11:05"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_MON, "10:05", "11:05"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_TUE, "10:05", "11:05"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_WED, "10:05", "11:05"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_THU, "10:05", "11:05"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_FRI, "10:05", "11:05"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_SAT, "10:05", "11:05"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_SUN, "11:10", "12:10"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_MON, "11:10", "12:10"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_TUE, "11:10", "12:10"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_WED, "11:10", "12:10"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_THU, "11:10", "12:10"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_FRI, "11:10", "12:10"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_SAT, "11:10", "12:10"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_SUN, "12:15", "13:15"));
+        progressiveSchedule.add(new AutoSchedule(Common.DAY_MON, "12:15", "13:15"));
+
+        //one week learner
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_SUN, "08:00", "12:00"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_TUE, "08:00", "12:00"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_THU, "08:00", "12:00"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_SAT, "08:00", "12:00"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_MON, "08:00", "12:00"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_WED, "08:00", "12:00"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_FRI, "08:00", "12:00"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_SUN, "12:05", "14:05"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_MON, "12:05", "14:05"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_TUE, "12:05", "14:05"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_WED, "12:05", "14:05"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_THU, "12:05", "14:05"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_FRI, "12:05", "14:05"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_SAT, "12:05", "14:05"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_SUN, "14:10", "16:10"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_MON, "14:10", "16:10"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_TUE, "14:10", "16:10"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_WED, "14:10", "16:10"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_THU, "14:10", "16:10"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_FRI, "14:10", "16:10"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_SAT, "14:10", "16:10"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_SUN, "16:15", "18:15"));
+        oneWeekSchedule.add(new AutoSchedule(Common.DAY_MON, "16:15", "18:15"));
+
+        //obsessed learner
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_SUN, "08:00", "15:00"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_TUE, "08:00", "15:00"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_THU, "08:00", "15:00"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_SAT, "08:00", "15:00"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_MON, "08:00", "15:00"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_WED, "08:00", "15:00"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_FRI, "08:00", "15:00"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_SUN, "15:05", "18:35"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_MON, "15:05", "18:35"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_TUE, "15:05", "18:35"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_WED, "15:05", "18:35"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_THU, "15:05", "18:35"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_FRI, "15:05", "18:35"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_SAT, "15:05", "18:35"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_SUN, "18:40", "21:40"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_MON, "18:40", "21:40"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_TUE, "18:40", "21:40"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_WED, "18:40", "21:40"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_THU, "18:40", "21:40"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_FRI, "18:40", "21:40"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_SAT, "18:40", "21:40"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_SUN, "21:45", "00:45"));
+        obsessedSchedule.add(new AutoSchedule(Common.DAY_MON, "21:45", "00:45"));
+
+        //crammer
+        crammerSchedule.add(new AutoSchedule(Common.DAY_SUN, "08:00", "13:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_SUN, "13:00", "18:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_SUN, "18:00", "23:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_MON, "08:00", "13:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_MON, "13:00", "18:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_MON, "18:00", "23:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_TUE, "08:00", "13:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_TUE, "13:00", "18:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_TUE, "18:00", "23:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_WED, "08:00", "13:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_WED, "13:00", "18:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_WED, "18:00", "23:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_THU, "08:00", "13:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_THU, "13:00", "18:00"));
+        crammerSchedule.add(new AutoSchedule(Common.DAY_THU, "18:00", "23:00"));
 
     }
 
@@ -276,11 +380,17 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
 
             style = Common.STYLE_PROGRESSIVE;
 
+            //schedules courses
+            scheduleCourses(style);
+
         } else
 
         if (result > 60 && result <= 70){
 
             style = Common.STYLE_ONE_WEEK;
+
+            //schedules courses
+            scheduleCourses(style);
 
         } else
 
@@ -288,11 +398,17 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
 
             style = Common.STYLE_OBSESSED;
 
+            //schedules courses
+            scheduleCourses(style);
+
         } else
 
         if (result > 85){
 
             style = Common.STYLE_CRAMMER;
+
+            //schedules courses
+            scheduleCourses(style);
 
         }
 
@@ -301,17 +417,16 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
             //update
             userViewModel.updateUserEvaluation(matric, style);
 
+            //get latest
+            User tempUser = userViewModel.getCurrentUser(matric);
+            if (tempUser != null){
+                currentUser = tempUser;
+
+                //save user
+                Paper.book().write(Common.CURRENT_USER, currentUser);
+            }
+
         }).start();
-
-        //get latest
-        userViewModel.getCurrentUser(matric).observe(this, response -> {
-
-            currentUser = response;
-
-            //save user
-            Paper.book().write(Common.CURRENT_USER, currentUser);
-
-        });
 
         //stop loading
         loadingDialog.cancelDialog();
@@ -320,6 +435,77 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
         String[] params = {"Study Evaluation", "Your study evaluation is complete and you fall into " + style + " category of learners.", "Acknowledged"};
         infoDialog = new InfoDialog(this, this, params, this);
         infoDialog.showDialog();
+
+    }
+
+    private void scheduleCourses(String style) {
+
+        //get the courses
+        List<String> courses = currentUser.getCourses().getCourses();
+
+        new Thread(() -> {
+
+            switch (style){
+
+                case Common.STYLE_PROGRESSIVE:
+
+                    //loop all course
+                    for (int i = 0; i < courses.size(); i++){
+
+                        String theCourse = courses.get(i);
+                        AutoSchedule currentAutoSchedule = progressiveSchedule.get(i);
+
+                        //create schedule
+                        scheduleViewModel.addNewSchedule(new Schedule(matric, theCourse, currentAutoSchedule.getDay(), currentAutoSchedule.getStart(), currentAutoSchedule.getStop()));
+
+                    }
+                    break;
+
+                case Common.STYLE_ONE_WEEK:
+
+                    //loop all course
+                    for (int i = 0; i < courses.size(); i++){
+
+                        String theCourse = courses.get(i);
+                        AutoSchedule currentAutoSchedule = oneWeekSchedule.get(i);
+
+                        //create schedule
+                        scheduleViewModel.addNewSchedule(new Schedule(matric, theCourse, currentAutoSchedule.getDay(), currentAutoSchedule.getStart(), currentAutoSchedule.getStop()));
+
+                    }
+                    break;
+
+                case Common.STYLE_OBSESSED:
+
+                    //loop all course
+                    for (int i = 0; i < courses.size(); i++){
+
+                        String theCourse = courses.get(i);
+                        AutoSchedule currentAutoSchedule = obsessedSchedule.get(i);
+
+                        //create schedule
+                        scheduleViewModel.addNewSchedule(new Schedule(matric, theCourse, currentAutoSchedule.getDay(), currentAutoSchedule.getStart(), currentAutoSchedule.getStop()));
+
+                    }
+                    break;
+
+                case Common.STYLE_CRAMMER:
+
+                    //loop all course
+                    for (int i = 0; i < courses.size(); i++){
+
+                        String theCourse = courses.get(i);
+                        AutoSchedule currentAutoSchedule = crammerSchedule.get(i);
+
+                        //create schedule
+                        scheduleViewModel.addNewSchedule(new Schedule(matric, theCourse, currentAutoSchedule.getDay(), currentAutoSchedule.getStart(), currentAutoSchedule.getStop()));
+
+                    }
+                    break;
+
+            }
+
+        }).start();
 
     }
 
@@ -364,7 +550,7 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
         allAnswers.add(new Answer(28, 8, 20, "1 Hr or more", 0));
 
         //questions
-        allQuestions.add(new Question(1, "Do you study most on the week?", getAnswers(1)));
+        allQuestions.add(new Question(1, "Do you study most on weekend?", getAnswers(1)));
         allQuestions.add(new Question(2, "How many hours cumulatively on the weekend can you study?", getAnswers(2)));
         allQuestions.add(new Question(3, "How frequently can you study in a week?", getAnswers(3)));
         allQuestions.add(new Question(4, "How many hours in a day can you dedicate to studying?", getAnswers(4)));
@@ -391,13 +577,13 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
 
     private void getCurrentUser() {
 
-        userViewModel.getCurrentUser(matric).observe(this, user -> {
-
-            if (user != null){
-                currentUser = user;
+        new Thread(() -> {
+            User tempUser = userViewModel.getCurrentUser(matric);
+            if (tempUser != null){
+                currentUser = tempUser;
             }
 
-        });
+        }).start();
 
     }
 
@@ -415,7 +601,8 @@ public class StudyStyleEvaluation extends AppCompatActivity implements InfoClick
         //close
         infoDialog.cancelDialog();
 
-        startActivity(new Intent(this, Dashboard.class));
+        startActivity(new Intent(this, SchedulePreset.class));
+        finish();
         Methods.slideLeft(this);
 
     }

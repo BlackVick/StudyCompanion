@@ -26,6 +26,8 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -178,9 +180,48 @@ public class Register extends AppCompatActivity implements InfoClickListener {
                 //get data
                 imageUri = result.getUri();
 
+                File avatarFolder = new File(getExternalFilesDir(""), Common.AVATAR_FOLDER);
+                if (!avatarFolder.exists()){
+                    avatarFolder.mkdirs();
+                }
+
+                //avatar file
+                File avatarFile = new File(avatarFolder, Methods.generateString() + "." + FilenameUtils.getExtension(imageUri.getPath()));
+
+                //copy file
+                InputStream in = null;
+                OutputStream out = null;
+                try {
+                    in = new FileInputStream(imageUri.getPath());
+                    out = new FileOutputStream(avatarFile.getAbsolutePath());
+
+                    byte[] buffer = new byte[1024];
+                    int read;
+                    while ((read = in.read(buffer)) != -1) {
+                        out.write(buffer, 0, read);
+                    }
+                    in.close();
+                    in = null;
+
+                    // write the output file (You have now copied the file)
+                    out.flush();
+                    out.close();
+                    out = null;
+
+                } catch (FileNotFoundException fileError) {
+                    Log.d("FileError", "File Error: " + fileError.getMessage());
+                } catch (Exception e) {
+                    Log.d("FileError", "Process Error: " + e.getMessage());
+                }
+
+
+                //create image uri
+                Uri uri = Uri.fromFile(new File(avatarFile.getAbsolutePath()));
+                imageLink = uri.toString();
+
                 //set image
                 Picasso.get()
-                        .load(Uri.parse(imageUri.toString()))
+                        .load(Uri.parse(imageLink))
                         .config(Bitmap.Config.RGB_565)
                         .fit().centerCrop()
                         .into(activity.userAvatar);
@@ -340,53 +381,20 @@ public class Register extends AppCompatActivity implements InfoClickListener {
         //start loading
         activity.setIsLoading(true);
 
-        if (imageUri != null){
+        /*if (imageUri != null){
 
-            File avatarFolder = new File(getExternalFilesDir(""), Common.AVATAR_FOLDER);
-            if (!avatarFolder.exists()){
-                avatarFolder.mkdirs();
-            }
-
-            //avatar file
-            File avatarFile = new File(avatarFolder, matric + ".jpg");
-
-            //copy file
-            InputStream in = null;
-            OutputStream out = null;
-            try {
-                in = new FileInputStream(imageUri.getPath());
-                out = new FileOutputStream(avatarFile.getAbsolutePath());
-
-                byte[] buffer = new byte[1024];
-                int read;
-                while ((read = in.read(buffer)) != -1) {
-                    out.write(buffer, 0, read);
-                }
-                in.close();
-                in = null;
-
-                // write the output file (You have now copied the file)
-                out.flush();
-                out.close();
-                out = null;
-
-            } catch (FileNotFoundException fileError) {
-                Log.d("FileError", "File Error: " + fileError.getMessage());
-            } catch (Exception e) {
-                Log.d("FileError", "Process Error: " + e.getMessage());
-            }
+            String formattedMatric = matric.replace("/", "-");
 
 
-            //create image uri
-            Uri uri = Uri.fromFile(new File(avatarFile.getAbsolutePath()));
-            imageLink = uri.toString();
 
-        }
+        }*/
 
         //check if user exist
-        userViewModel.doesUserExist(matric).observe(this, user -> {
+        new Thread(() -> {
 
-            if (user != null){
+            User existingUser = userViewModel.doesUserExist(matric);
+
+            if (existingUser != null){
 
                 //stop loading
                 activity.setIsLoading(false);
@@ -405,14 +413,14 @@ public class Register extends AppCompatActivity implements InfoClickListener {
                 User newUser = new User(firstName, lastName, matric, dept, "", imageLink, theCourses, "", pass);
 
                 //update database
-                new Thread(() -> userViewModel.addNewUser(newUser)).start();
+                userViewModel.addNewUser(newUser);
 
                 //process registration
                 processData(newUser);
 
             }
 
-        });
+        }).start();
 
     }
 
@@ -424,12 +432,6 @@ public class Register extends AppCompatActivity implements InfoClickListener {
         //save to local
         Paper.book().write(Common.USER_ID, newUser.getMatric_num());
         Paper.book().write(Common.CURRENT_USER, newUser);
-
-        //start schedule service
-        if (!Methods.isServiceRunning(this, ScheduleService.class)) {
-            Intent scheduleIntent = new Intent(this, ScheduleService.class);
-            ContextCompat.startForegroundService(this, scheduleIntent);
-        }
 
         //update ui
         Intent studyStyleIntent = new Intent(this, StudyStyleEvaluation.class);

@@ -8,7 +8,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
@@ -44,14 +46,17 @@ public class ScheduleService extends Service {
 
     //values
     private String matric;
-    private boolean isCheckerRunning = false;
 
     //database
     private ScheduleDatabase database;
 
     //data
     private List<Schedule> fullScheduleList = new ArrayList<>();
-    private List<Schedule> todayScheduleList = new ArrayList<>();
+    private List<Schedule> calledNotification = new ArrayList<>();
+
+    //handler and runnables
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
 
     public ScheduleService() {
     }
@@ -89,10 +94,10 @@ public class ScheduleService extends Service {
                 0, farmDetailIntent, 0);
 
 
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), Common.DEFAULT_NOTIFICATION_CHANNEL)
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), Common.FOREGROUND_NOTIFICATION_CHANNEL)
                 .setContentTitle("Study Companion")
-                .setContentText("This is your study companion schedule engine.")
-                .setSmallIcon(R.color.transparent)
+                .setContentText("Study Companion schedule engine Running.")
+                .setSmallIcon(R.drawable.ic_stat_notification)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .build();
@@ -110,48 +115,20 @@ public class ScheduleService extends Service {
             //populate list
             fullScheduleList.addAll(database.scheduleDao().getAllUserDirectSchedules(matric));
 
-        }).start();
-
-        //get today schedules
-        getTodaySchedules();
-
-        //retry fetching schedules at intervals of 5 minutes
-        new Handler(Looper.myLooper()).postDelayed(this::fetchSchedules, 300000);
-
-    }
-
-    private void getTodaySchedules() {
-
-        //loop through all schedules
-        for (Schedule schedule : fullScheduleList){
-
-            //check if schedule is for current day and has not already been added
-            if (schedule.getDay().equals(Methods.today()) && !todayScheduleList.contains(schedule)){
-
-                //add schedule to list
-                todayScheduleList.add(schedule);
-
-            }
-
-        }
-
-        //start check for current
-        if (!isCheckerRunning) {
+            //check schedules
             checkForSchedule();
-        }
+
+        }).start();
 
     }
 
     private void checkForSchedule() {
 
-        //change state
-        isCheckerRunning = true;
-
         //loop through today schedule
-        for (Schedule schedule : todayScheduleList){
+        for (Schedule schedule : fullScheduleList){
 
             //check time
-            if (schedule.equals(getCurrentTime()) || doesTimeFallWithin(schedule)){
+            if ((schedule.getDay().equals(Methods.today())) && (schedule.getStart().equals(getCurrentTime()) || doesTimeFallWithin(schedule))){
 
                 //activate reminder
                 activateReminder(schedule);
@@ -160,7 +137,9 @@ public class ScheduleService extends Service {
         }
 
         //repeat check
-        new Handler(Looper.myLooper()).postDelayed(this::checkForSchedule, 40000);
+        handler.postDelayed(runnable = () -> {
+            checkForSchedule();
+        }, 35000);
 
     }
 
@@ -194,7 +173,14 @@ public class ScheduleService extends Service {
     private void activateReminder(Schedule schedule) {
 
         //check if user already open activity
-        if (Paper.book().read(Common.STUDY_HELP) == null) {
+        if (!calledNotification.contains(schedule)) {
+
+            //called notification
+            calledNotification.add(schedule);
+
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            MediaPlayer mp = MediaPlayer.create(getApplicationContext(), notification);
+            mp.start();
 
             //build notification
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Common.DEFAULT_NOTIFICATION_CHANNEL);
@@ -217,13 +203,14 @@ public class ScheduleService extends Service {
             builder.setSmallIcon(R.drawable.ic_stat_notification)
                     .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(),
                             R.drawable.gradient_logo))
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setSound(Uri.parse("android.resource://"
+                            + getApplicationContext().getPackageName() + "/" + R.raw.alarm))
                     .setContentTitle("Time To Study")
                     .setContentText("From: Study Companion")
                     .setColor(getResources().getColor(R.color.colorPrimaryDark))
-                    .setAutoCancel(false)
+                    .setAutoCancel(true)
                     .setSubText("Time to study")
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText("Hello, it is time for you to study your " + schedule.getCourse() + " course. Lets get to it.").setSummaryText("Hello, it is time for you to study your \" + schedule.getCourse() + \" course. Lets get to it."))
                     .setOnlyAlertOnce(false);
             builder.setContentIntent(notificationPendingIntent);
@@ -249,5 +236,11 @@ public class ScheduleService extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(runnable);
     }
 }

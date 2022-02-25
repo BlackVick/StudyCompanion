@@ -105,17 +105,31 @@ public class Login extends AppCompatActivity implements InfoClickListener {
         activity.setIsLoading(true);
 
         //check if user exist
-        userViewModel.doesUserExist(matric).observe(this, user -> {
+        new Thread(() -> {
 
-            if (user != null){
+            User existingUser = userViewModel.doesUserExist(matric);
+
+            if (existingUser != null){
 
                 //login
-                userViewModel.loginUser(matric, pass).observe(this, loggedInUser -> {
+                User loggedInUser = userViewModel.loginUser(matric, pass);
+
+                if (loggedInUser != null) {
 
                     //process data
                     processData(loggedInUser);
 
-                });
+                } else {
+
+                    //stop loading
+                    activity.setIsLoading(false);
+
+                    //show error
+                    String[] params = {"Password", "You have provided a wrong password for user. Try again", "Okay"};
+                    infoDialog = new InfoDialog(this, this, params, this);
+                    infoDialog.showDialog();
+
+                }
 
             } else {
 
@@ -129,7 +143,7 @@ public class Login extends AppCompatActivity implements InfoClickListener {
 
             }
 
-        });
+        }).start();
 
     }
 
