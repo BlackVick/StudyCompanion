@@ -51,6 +51,7 @@ import esw.peeplo.studentstudycom.adapters.ScheduleAdapter;
 import esw.peeplo.studentstudycom.adapters.SearchAdapter;
 import esw.peeplo.studentstudycom.auth.Register;
 import esw.peeplo.studentstudycom.databinding.ActivityCourseDetailBinding;
+import esw.peeplo.studentstudycom.databinding.EditScheduleDialogBinding;
 import esw.peeplo.studentstudycom.databinding.ScheduleDialogBinding;
 import esw.peeplo.studentstudycom.dialogs.ChoiceDialog;
 import esw.peeplo.studentstudycom.dialogs.InfoDialog;
@@ -637,10 +638,37 @@ public class CourseDetail extends AppCompatActivity implements InfoClickListener
             if (saved.getDay().equals(schedule.getDay())) {
 
                 LocalTime rangeStart = LocalTime.parse(saved.getStart());
-                LocalTime rangeEnd = LocalTime.parse(saved.getEnd());
+                LocalTime rangeEnd = LocalTime.parse(saved.getStop());
 
                 LocalTime newStart = LocalTime.parse(schedule.getStart());
-                LocalTime newEnd = LocalTime.parse(schedule.getEnd());
+                LocalTime newEnd = LocalTime.parse(schedule.getStop());
+                if ((!newStart.isBefore(rangeStart) && newStart.isBefore(rangeEnd)) || (!newEnd.isBefore(rangeStart) && newEnd.isBefore(rangeEnd))) {
+                    result = true;
+                    break;
+                }
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+    private boolean doesUpdateTimeFallWithin(Schedule schedule){
+
+        //result
+        boolean result = false;
+
+        for (Schedule saved : scheduleList) {
+
+            if (saved.getDay().equals(schedule.getDay()) && (saved.getId() < schedule.getId() || saved.getId() > schedule.getId())) {
+
+                LocalTime rangeStart = LocalTime.parse(saved.getStart());
+                LocalTime rangeEnd = LocalTime.parse(saved.getStop());
+
+                LocalTime newStart = LocalTime.parse(schedule.getStart());
+                LocalTime newEnd = LocalTime.parse(schedule.getStop());
                 if ((!newStart.isBefore(rangeStart) && newStart.isBefore(rangeEnd)) || (!newEnd.isBefore(rangeStart) && newEnd.isBefore(rangeEnd))) {
                     result = true;
                     break;
@@ -716,6 +744,136 @@ public class CourseDetail extends AppCompatActivity implements InfoClickListener
 
     }
 
+    public void loadEditScheduleDialog(Schedule schedule) {
+
+        //bind dialog
+        scheduleDialog = new AlertDialog.Builder(this, R.style.DialogTheme).create();
+        EditScheduleDialogBinding binding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.edit_schedule_dialog, null, false);
+        scheduleDialog.setView(binding.getRoot());
+
+        //add view properties
+        scheduleDialog.getWindow().getAttributes().windowAnimations = R.style.SlideDialogAnimation;
+        scheduleDialog.getWindow().setGravity(Gravity.BOTTOM);
+        scheduleDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        //add windows properties
+        WindowManager.LayoutParams layoutParams = scheduleDialog.getWindow().getAttributes();
+        scheduleDialog.getWindow().setAttributes(layoutParams);
+
+        //show dialog
+        scheduleDialog.show();
+
+        //default
+        binding.setIsLoading(false);
+        binding.setIsSun(schedule.getDay().equals(Common.DAY_SUN));
+        binding.setIsMon(schedule.getDay().equals(Common.DAY_MON));
+        binding.setIsTue(schedule.getDay().equals(Common.DAY_TUE));
+        binding.setIsWed(schedule.getDay().equals(Common.DAY_WED));
+        binding.setIsThu(schedule.getDay().equals(Common.DAY_THU));
+        binding.setIsFri(schedule.getDay().equals(Common.DAY_FRI));
+        binding.setIsSat(schedule.getDay().equals(Common.DAY_SAT));
+        binding.startTime.setText(schedule.getStart());
+        binding.stopTime.setText(schedule.getStop());
+
+        //close
+        binding.closeDialog.setOnClickListener(v -> {
+
+            //dismiss dialog
+            scheduleDialog.dismiss();
+
+        });
+
+        //start time
+        binding.startTime.setOnClickListener(v -> {
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(CourseDetail.this, (timePicker, selectedHour, selectedMinute) -> {
+                binding.startTime.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
+            }, hour, minute, true);
+            mTimePicker.setTitle("Select Start Time");
+            mTimePicker.show();
+        });
+
+        //stop time
+        binding.stopTime.setOnClickListener(v -> {
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(CourseDetail.this, (timePicker, selectedHour, selectedMinute) -> {
+                binding.stopTime.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
+            }, hour, minute, true);
+            mTimePicker.setTitle("Select Stop Time");
+            mTimePicker.show();
+        });
+
+        //add
+        binding.updateBtn.setOnClickListener(v -> {
+
+            //validate
+            String start = binding.startTime.getText().toString().trim();
+            String stop = binding.stopTime.getText().toString().trim();
+
+            //check
+            if (start.equals("CLICK TO SET TIME")){
+
+                Toast.makeText(this, "Set Start Time", Toast.LENGTH_SHORT).show();
+
+            } else
+
+            if (stop.equals("CLICK TO SET TIME")){
+
+                Toast.makeText(this, "Set Stop Time", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                //create schedule
+                schedule.setStart(start);
+                schedule.setStop(stop);
+
+                //check if it overlaps
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    if (!doesUpdateTimeFallWithin(schedule)) {
+                        //add schedule
+                        new Thread(() -> {scheduleViewModel.updateSchedule(start, stop, schedule.getId());}).start();
+                    } else {
+                        Toast.makeText(this, "Schedule Entry time overlaps with other set schedule time.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+
+                    //add schedule
+                    new Thread(() -> {scheduleViewModel.updateSchedule(start, stop, schedule.getId());}).start();
+
+                }
+
+                //clear data
+                scheduleList.clear();
+
+                //fetch list again
+                fetchAllSchedules();
+
+                //close dialog
+                scheduleDialog.dismiss();
+
+                //stop schedule service
+                if (Methods.isServiceRunning(this, ScheduleService.class)) {
+                    stopService(new Intent(this, ScheduleService.class));
+                }
+
+                //start schedule service
+                if (!Methods.isServiceRunning(this, ScheduleService.class)) {
+                    Intent scheduleIntent = new Intent(this, ScheduleService.class);
+                    ContextCompat.startForegroundService(this, scheduleIntent);
+                }
+
+            }
+
+        });
+
+    }
+
     public void deleteSchedule(Schedule schedule, int position){
 
         new Thread(() -> {
@@ -742,6 +900,7 @@ public class CourseDetail extends AppCompatActivity implements InfoClickListener
         }
 
         //finish
+        startActivity(new Intent(this, Dashboard.class));
         finish();
 
         //close anim
@@ -851,7 +1010,7 @@ public class CourseDetail extends AppCompatActivity implements InfoClickListener
         for (Schedule theSchedule : scheduleList){
 
             LocalTime rangeStart = LocalTime.parse(theSchedule.getStart());
-            LocalTime rangeEnd = LocalTime.parse(theSchedule.getEnd());
+            LocalTime rangeEnd = LocalTime.parse(theSchedule.getStop());
 
             LocalTime newStart = LocalTime.parse(new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()));
             if ((!newStart.isBefore(rangeStart) && newStart.isBefore(rangeEnd))) {
@@ -944,4 +1103,5 @@ public class CourseDetail extends AppCompatActivity implements InfoClickListener
 
         }
     }
+
 }

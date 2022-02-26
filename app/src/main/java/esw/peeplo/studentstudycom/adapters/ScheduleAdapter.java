@@ -83,6 +83,15 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
             });
 
+            //edit schedule
+            binding.editSchedule.setOnClickListener(v -> {
+
+                if (activity instanceof CourseDetail){
+                    ((CourseDetail)activity).loadEditScheduleDialog(schedule);
+                }
+
+            });
+
         }
 
     }

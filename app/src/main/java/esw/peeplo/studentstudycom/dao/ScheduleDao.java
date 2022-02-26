@@ -37,6 +37,10 @@ public interface ScheduleDao {
     @Query("SELECT * FROM schedules WHERE owner = :matric AND course = :course AND day = :day")
     LiveData<List<Schedule>> doesScheduleExist(String matric, String course, String day);
 
+    //update schedule times
+    @Query("UPDATE schedules SET start = :start, stop = :stop WHERE id = :id")
+    void updateScheduleTime(String start, String stop, int id);
+
     //remove schedule
     @Query("DELETE FROM schedules WHERE owner = :matric AND id = :id")
     void removeSchedule(String matric, int id);

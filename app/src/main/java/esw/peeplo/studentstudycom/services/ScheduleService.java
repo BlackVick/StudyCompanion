@@ -156,7 +156,7 @@ public class ScheduleService extends Service {
 
         //get start and end time boundary for schedule
         LocalTime rangeStart = LocalTime.parse(schedule.getStart());
-        LocalTime rangeEnd = LocalTime.parse(schedule.getEnd());
+        LocalTime rangeEnd = LocalTime.parse(schedule.getStop());
 
         //get current time
         LocalTime newStart = LocalTime.parse(new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()));

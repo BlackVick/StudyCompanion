@@ -43,6 +43,10 @@ public class ScheduleViewModel extends AndroidViewModel {
         return database.scheduleDao().doesScheduleExist(matric, course, day);
     }
 
+    public void updateSchedule(String start, String stop, int id){
+        database.scheduleDao().updateScheduleTime(start, stop, id);
+    }
+
     public void removeSchedule(String matric, int id){
         database.scheduleDao().removeSchedule(matric, id);
     }

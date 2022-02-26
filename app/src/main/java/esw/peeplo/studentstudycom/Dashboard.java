@@ -256,6 +256,7 @@ public class Dashboard extends AppCompatActivity implements InfoClickListener, C
         Intent courseIntent = new Intent(this, CourseDetail.class);
         courseIntent.putExtra(Common.COURSE_DATA, course);
         startActivity(courseIntent);
+        finish();
         Methods.slideLeft(this);
 
     }

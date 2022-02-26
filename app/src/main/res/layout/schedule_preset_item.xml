@@ -82,7 +82,7 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:id="@+id/setSchedule"
                 tools:text="Tuesdays (08:00 - 20:22)"
-                android:text='@{currentSchedule.day + "s (" + currentSchedule.start + " - " + currentSchedule.end + ")"}'
+                android:text='@{currentSchedule.day + "s (" + currentSchedule.start + " - " + currentSchedule.stop + ")"}'
                 android:textSize="@dimen/_13ssp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/dosis"

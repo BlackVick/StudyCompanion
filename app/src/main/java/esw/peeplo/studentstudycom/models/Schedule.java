@@ -26,15 +26,15 @@ public class Schedule implements Serializable {
     @SerializedName("start")
     private String start;
 
-    @SerializedName("end")
-    private String end;
+    @SerializedName("stop")
+    private String stop;
 
-    public Schedule(String owner, String course, String day, String start, String end) {
+    public Schedule(String owner, String course, String day, String start, String stop) {
         this.owner = owner;
         this.course = course;
         this.day = day;
         this.start = start;
-        this.end = end;
+        this.stop = stop;
     }
 
     public int getId() {
@@ -77,12 +77,12 @@ public class Schedule implements Serializable {
         this.start = start;
     }
 
-    public String getEnd() {
-        return end;
+    public String getStop() {
+        return stop;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
+    public void setStop(String stop) {
+        this.stop = stop;
     }
 
     @Override
